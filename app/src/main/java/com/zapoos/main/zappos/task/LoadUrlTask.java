@@ -19,7 +19,6 @@ import java.net.URL;
  */
 public class LoadUrlTask extends AsyncTask<String, Void, Response> {
     private ResponseCallback callback;
-    private Context context;
     private Class<? extends Response> responseClass;
 
     public ResponseCallback getCallback() {
@@ -32,7 +31,6 @@ public class LoadUrlTask extends AsyncTask<String, Void, Response> {
 
     public LoadUrlTask(ResponseCallback callback, Context context, Class responseClass) {
         this.callback = callback;
-        this.context = context;
         this.responseClass = responseClass;
     }
 
@@ -43,15 +41,14 @@ public class LoadUrlTask extends AsyncTask<String, Void, Response> {
 
     @Override
     protected Response doInBackground(String... locations) {
-        URL url = null;
+        URL url;
         try {
             String dataUrl = locations[0];
             url = new URL(dataUrl);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             String response = readStream(in);
-            Response r = new Gson().fromJson(response, responseClass);
-            return r;
+            return new Gson().fromJson(response, responseClass);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,7 +60,7 @@ public class LoadUrlTask extends AsyncTask<String, Void, Response> {
         StringBuilder sb = new StringBuilder();
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            String nextLine = "";
+            String nextLine;
             while ((nextLine = reader.readLine()) != null) {
                 sb.append(nextLine);
             }

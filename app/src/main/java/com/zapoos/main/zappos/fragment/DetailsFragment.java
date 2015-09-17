@@ -17,14 +17,10 @@ import android.widget.Toast;
 
 import com.zapoos.main.zappos.R;
 import com.zapoos.main.zappos.adapter.ChildAsinsAdapter;
-import com.zapoos.main.zappos.model.ChildAsins;
 import com.zapoos.main.zappos.model.ProductDetails;
 import com.zapoos.main.zappos.model.Response;
 import com.zapoos.main.zappos.task.LoadUrlTask;
 import com.zapoos.main.zappos.view.MaterialProgressBar;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class DetailsFragment extends Fragment implements LoadUrlTask.ResponseCallback {
@@ -32,9 +28,7 @@ public class DetailsFragment extends Fragment implements LoadUrlTask.ResponseCal
 
     private String asin;
     private MaterialProgressBar progressBar;
-    private RecyclerView recyclerView;
     private ChildAsinsAdapter adapter;
-    private HashMap<String, ArrayList<ChildAsins>> products = new HashMap<>();
     private ProductDetails details;
 
     public static DetailsFragment newInstance(String param1) {
@@ -63,10 +57,10 @@ public class DetailsFragment extends Fragment implements LoadUrlTask.ResponseCal
 
         progressBar = (MaterialProgressBar) v.findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
-        new LoadUrlTask(this, getActivity(), ProductDetails.class).execute("https://zappos.amazon.com/mobileapi/v1/product/asin/" + asin);
+        new LoadUrlTask(this, getActivity(), ProductDetails.class).execute(getString(R.string.details_url) + asin);
 
         adapter = new ChildAsinsAdapter(getActivity());
-        recyclerView = (RecyclerView) v.findViewById(R.id.product_list);
+        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.product_list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 

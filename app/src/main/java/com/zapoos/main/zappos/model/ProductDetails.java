@@ -39,14 +39,6 @@ public class ProductDetails implements Response {
         this.defaultProductType = defaultProductType;
     }
 
-    public String getGendersString() {
-        String genders = "";
-        for (String gender : this.genders) {
-            genders += gender + ", ";
-        }
-        return genders.substring(0, genders.length() - 2);
-    }
-
     public String getDescription() {
         return description;
     }
@@ -123,6 +115,14 @@ public class ProductDetails implements Response {
                 asins.add(childAsins1);
             }
         }
+    }
+
+    public String getGendersString() {
+        String genders = "";
+        for (String gender : this.genders) {
+            genders += gender + ", ";
+        }
+        return genders.substring(0, genders.length() - 2);
     }
 
 }

@@ -30,9 +30,6 @@ import java.util.ArrayList;
 
 public class ProductFragment extends Fragment implements CustomEditText.OnActionListener, LoadUrlTask.ResponseCallback {
 
-    private static String TAG = ProductFragment.class.getSimpleName();
-
-    private RecyclerView recyclerView;
     private ProductAdapter adapter;
     private CustomEditText searchText;
     private ArrayList<Product> products = new ArrayList<>();
@@ -55,7 +52,7 @@ public class ProductFragment extends Fragment implements CustomEditText.OnAction
         searchText.setOnActionListener(this);
 
         adapter = new ProductAdapter(getActivity(), products);
-        recyclerView = (RecyclerView) layout.findViewById(R.id.product_list);
+        RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.product_list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
@@ -88,7 +85,7 @@ public class ProductFragment extends Fragment implements CustomEditText.OnAction
         if (!searchText.getText().toString().isEmpty()) {
             try {
                 progressBar.setVisibility(View.VISIBLE);
-                new LoadUrlTask(this, getActivity(), SearchResponse.class).execute("https://zappos.amazon.com/mobileapi/v1/search?term=" +
+                new LoadUrlTask(this, getActivity(), SearchResponse.class).execute(getString(R.string.search_url) +
                         URLEncoder.encode(searchText.getText().toString(), "utf-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();

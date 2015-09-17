@@ -89,8 +89,12 @@ public class ChildAsinsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Override
         public void display(int position) {
             ChildAsins current = details.getMap().get(keys.get(position - 1)).get(0);
-            name.setText(current.getColor());
-            items.setText(details.getMap().get(keys.get(position - 1)).size() + " items left");
+            name.setText(current.getColor() + "(" + current.getGendersString() + ")");
+            int size = details.getMap().get(keys.get(position - 1)).size();
+            String postfix = " items left";
+            if (size == 1)
+                postfix = " item left";
+            items.setText(size + postfix);
             if (price != null) {
                 price.setText("$" + current.getPrice());
             }

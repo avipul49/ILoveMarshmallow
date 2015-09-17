@@ -33,7 +33,7 @@ public class ChildAsins {
     }
 
     public String getPrice() {
-        return price == null ? originalPrice : "$" + price;
+        return price == null ? originalPrice : price;
     }
 
     public void setPrice(String price) {
@@ -96,5 +96,12 @@ public class ChildAsins {
         this.onHand = onHand;
     }
 
+    public String getGendersString() {
+        String genders = "";
+        for (String gender : this.genders) {
+            genders += gender + ", ";
+        }
+        return genders.substring(0, genders.length() - 2);
+    }
 }
 
