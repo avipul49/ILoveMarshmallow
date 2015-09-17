@@ -52,7 +52,7 @@
             android:layout_below="@+id/separator"
             android:textSize="15dp"
             android:gravity="center_vertical|start"
-            android:textColor="@color/background"
+            android:textColor="@color/color_secondary"
             android:textStyle="bold" />
 
         <TextView

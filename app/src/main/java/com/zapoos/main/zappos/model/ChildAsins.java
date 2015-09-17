@@ -3,7 +3,6 @@ package com.zapoos.main.zappos.model;
 import java.util.Map;
 
 public class ChildAsins {
-//    private Sizing sizing;
 
     private boolean onSale;
 
@@ -11,7 +10,7 @@ public class ChildAsins {
 
     private String asin;
 
-    private String originalPrice ;
+    private String originalPrice;
 
     private String imageUrl;
 
@@ -24,14 +23,6 @@ public class ChildAsins {
     private String[] upc;
 
     private String onHand;
-//
-//    public Sizing getSizing() {
-//        return sizing;
-//    }
-//
-//    public void setSizing(Sizing sizing) {
-//        this.sizing = sizing;
-//    }
 
     public boolean isOnSale() {
         return onSale;
@@ -42,7 +33,7 @@ public class ChildAsins {
     }
 
     public String getPrice() {
-        return price;
+        return price == null ? originalPrice : "$" + price;
     }
 
     public void setPrice(String price) {
@@ -81,14 +72,6 @@ public class ChildAsins {
         this.color = color;
     }
 
-//    public Map getMap() {
-//        return map;
-//    }
-
-//    public void setMap(Map map) {
-//        this.map = map;
-//    }
-
     public String[] getGenders() {
         return genders;
     }
@@ -113,9 +96,5 @@ public class ChildAsins {
         this.onHand = onHand;
     }
 
-    @Override
-    public String toString() {
-        return "ClassPojo [onSale = " + onSale + ", price = " + price + ", asin = " + asin + ", originalPrice = " + originalPrice + ", imageUrl = " + imageUrl + ", color = " + color + ", map = " + map + ", genders = " + genders + ", upc = " + upc + ", onHand = " + onHand + "]";
-    }
 }
 

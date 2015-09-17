@@ -91,8 +91,4 @@ public class Product {
         this.brandName = brandName;
     }
 
-    @Override
-    public String toString() {
-        return "ClassPojo [productRating = " + productRating + ", price = " + price + ", asin = " + asin + ", originalPrice = " + originalPrice + ", imageUrl = " + imageUrl + ", productUrl = " + productUrl + ", map = " + map + ", productName = " + productName + ", brandName = " + brandName + "]";
-    }
 }

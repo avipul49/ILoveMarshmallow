@@ -25,8 +25,4 @@ public class SearchResponse implements Response {
         this.totalResults = totalResults;
     }
 
-    @Override
-    public String toString() {
-        return "ClassPojo [results = " + results + ", totalResults = " + totalResults + "]";
-    }
 }

@@ -20,6 +20,60 @@
         android:layout_margin="5dp"
         android:scaleType="center" />
 
+    <LinearLayout
+        android:layout_below="@id/image"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_secondary"></LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_secondary"
+        android:text="Brand"
+        android:layout_marginLeft="5dp"
+        android:padding="5dp" />
+
+    <TextView
+        android:id="@+id/brand_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:paddingBottom="5dp"
+        android:textSize="15dp" />
+
+
+    <LinearLayout
+        android:layout_below="@id/image"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_secondary"></LinearLayout>
+
+    <TextView
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_secondary"
+        android:text="Ganders" />
+
+    <TextView
+        android:id="@+id/genders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:paddingBottom="5dp"
+        android:textSize="15dp" />
+
+    <LinearLayout
+        android:layout_below="@id/image"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_secondary"></LinearLayout>
+
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"
@@ -27,5 +81,5 @@
         android:padding="10dp"
         android:textSize="15dp" />
 
-    
+
 </LinearLayout>

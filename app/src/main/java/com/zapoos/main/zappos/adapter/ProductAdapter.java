@@ -28,11 +28,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         this.data = data;
     }
 
-    public void delete(int position) {
-        data.remove(position);
-        notifyItemRemoved(position);
-    }
-
     @Override
     public int getItemViewType(int position) {
         return 0;
@@ -51,6 +46,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         Product current = data.get(position);
         holder.name.setText(current.getProductName());
         holder.price.setText(current.getPrice());
+        holder.brandName.setText(current.getBrandName());
         String imageUrl = current.getImageUrl().replace("160", "450");
         ImageLoaderUtil.displayImage(context, imageUrl, holder.image);
     }
@@ -65,6 +61,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         ImageView image;
         TextView price;
         CardView cardView;
+        TextView brandName;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -72,6 +69,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             image = (ImageView) itemView.findViewById(R.id.image);
             price = (TextView) itemView.findViewById(R.id.price);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
+            brandName = (TextView) itemView.findViewById(R.id.brand_name);
         }
     }
 }

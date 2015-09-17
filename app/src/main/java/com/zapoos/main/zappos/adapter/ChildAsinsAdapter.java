@@ -58,35 +58,7 @@ public class ChildAsinsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if (viewHolder instanceof MyViewHolder) {
-            MyViewHolder holder = (MyViewHolder) viewHolder;
-            ChildAsins current = details.getMap().get(keys.get(position - 1)).get(0);
-            holder.name.setText(current.getColor());
-            holder.items.setText(details.getMap().get(keys.get(position - 1)).size() + " items left");
-            String price = null;
-            if (current.getPrice() == null || current.getPrice().isEmpty()) {
-                price = current.getOriginalPrice();
-            } else
-                price = current.getPrice();
-            if (price != null) {
-                holder.price.setText("$" + price);
-            }
-            if (current.getImageUrl() != null) {
-                holder.image.setVisibility(View.VISIBLE);
-                String imageUrl = current.getImageUrl().replace("160", "450");
-                ImageLoaderUtil.displayImage(context, imageUrl, holder.image);
-            } else {
-                holder.image.setVisibility(View.GONE);
-            }
-        } else {
-            VHHeader holder = (VHHeader) viewHolder;
-            holder.name.setText(details.getProductName());
-            holder.description.setText(Html.fromHtml(details.getDescription()));
-            if (details.getDefaultImageUrl() != null) {
-                String imageUrl = details.getDefaultImageUrl().replace("160", "450");
-                ImageLoaderUtil.displayImage(context, imageUrl, holder.image);
-            }
-        }
+        ((DisplayInterface) viewHolder).display(position);
     }
 
     @Override
@@ -94,7 +66,11 @@ public class ChildAsinsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return ((details == null) ? 0 : details.getMap().size() + 1);
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    interface DisplayInterface {
+        void display(int position);
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder implements DisplayInterface {
         TextView name;
         ImageView image;
         TextView price;
@@ -109,18 +85,51 @@ public class ChildAsinsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             cardView = (CardView) itemView.findViewById(R.id.card_view);
             items = (TextView) itemView.findViewById(R.id.items);
         }
+
+        @Override
+        public void display(int position) {
+            ChildAsins current = details.getMap().get(keys.get(position - 1)).get(0);
+            name.setText(current.getColor());
+            items.setText(details.getMap().get(keys.get(position - 1)).size() + " items left");
+            if (price != null) {
+                price.setText("$" + current.getPrice());
+            }
+            if (current.getImageUrl() != null) {
+                image.setVisibility(View.VISIBLE);
+                String imageUrl = current.getImageUrl().replace("160", "450");
+                ImageLoaderUtil.displayImage(context, imageUrl, image);
+            } else {
+                image.setVisibility(View.GONE);
+            }
+        }
     }
 
-    class VHHeader extends RecyclerView.ViewHolder {
+    class VHHeader extends RecyclerView.ViewHolder implements DisplayInterface {
         TextView name;
         ImageView image;
         TextView description;
+        TextView brand;
+        TextView genders;
 
         public VHHeader(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.name);
             image = (ImageView) itemView.findViewById(R.id.image);
             description = (TextView) itemView.findViewById(R.id.description);
+            brand = (TextView) itemView.findViewById(R.id.brand_name);
+            genders = (TextView) itemView.findViewById(R.id.genders);
+        }
+
+        @Override
+        public void display(int position) {
+            name.setText(details.getProductName());
+            description.setText(Html.fromHtml(details.getDescription()));
+            genders.setText(details.getGendersString());
+            brand.setText(details.getBrandName());
+            if (details.getDefaultImageUrl() != null) {
+                String imageUrl = details.getDefaultImageUrl().replace("160", "450");
+                ImageLoaderUtil.displayImage(context, imageUrl, image);
+            }
         }
     }
 }

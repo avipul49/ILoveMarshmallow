@@ -4,17 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.zapoos.main.zappos.R;
 import com.zapoos.main.zappos.adapter.ProductAdapter;
@@ -35,21 +33,12 @@ public class ProductFragment extends Fragment implements CustomEditText.OnAction
     private static String TAG = ProductFragment.class.getSimpleName();
 
     private RecyclerView recyclerView;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
     private ProductAdapter adapter;
-    private View containerView;
-    private ProductFragmentListener drawerListener;
     private CustomEditText searchText;
     private ArrayList<Product> products = new ArrayList<>();
     private MaterialProgressBar progressBar;
 
     public ProductFragment() {
-
-    }
-
-    public void setDrawerListener(ProductFragmentListener listener) {
-        this.drawerListener = listener;
     }
 
     @Override
@@ -72,12 +61,7 @@ public class ProductFragment extends Fragment implements CustomEditText.OnAction
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                DetailsFragment detailsFragment = new DetailsFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("asin", products.get(position).getAsin());
-                bundle.putString("imageUrl", products.get(position).getImageUrl());
-                detailsFragment.setArguments(bundle);
-                getFragmentManager().beginTransaction().replace(R.id.container, detailsFragment).addToBackStack(null).commit();
+                openDetailsFragment(products.get(position).getAsin());
             }
 
             @Override
@@ -89,13 +73,14 @@ public class ProductFragment extends Fragment implements CustomEditText.OnAction
         return layout;
     }
 
+    private void openDetailsFragment(String asin) {
+        DetailsFragment detailsFragment = DetailsFragment.newInstance(asin);
+        getFragmentManager().beginTransaction().replace(R.id.container, detailsFragment).addToBackStack(null).commit();
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-    }
-
-    public void refresh() {
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -108,6 +93,8 @@ public class ProductFragment extends Fragment implements CustomEditText.OnAction
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
+        } else {
+            Toast.makeText(getActivity(), "Please write something to search", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -119,6 +106,8 @@ public class ProductFragment extends Fragment implements CustomEditText.OnAction
             products.clear();
             products.addAll(searchResponse.getResults());
             adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(getActivity(), "No network connectivity", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -166,15 +155,5 @@ public class ProductFragment extends Fragment implements CustomEditText.OnAction
         }
     }
 
-    public interface ProductFragmentListener {
-        public void onDrawerItemSelected(Product position);
-    }
 
-    public boolean isOpen() {
-        return mDrawerLayout.isDrawerOpen(Gravity.LEFT);
-    }
-
-    public void close() {
-        mDrawerLayout.closeDrawer(Gravity.LEFT);
-    }
 }
