@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity$PlaceholderFragment"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+
+    <com.zapoos.main.zappos.view.CustomEditText
+        android:hint="Search"
+        style="@style/App_EditTextStyle"
+        android:id="@+id/search_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/search_icon"
+        android:singleLine="true"
+        android:imeOptions="actionSearch"
+        android:text="adidas"
+        android:inputType="text"
+        android:layout_marginBottom="2dp" />
+
+    <com.zapoos.main.zappos.view.MaterialProgressBar
+        android:visibility="gone"
+        android:id="@+id/progress_bar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/product_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp" />
+
+
+</LinearLayout>
