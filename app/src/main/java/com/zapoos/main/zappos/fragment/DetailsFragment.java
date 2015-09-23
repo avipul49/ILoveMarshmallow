@@ -116,9 +116,14 @@ public class DetailsFragment extends Fragment implements LoadUrlTask.ResponseCal
         progressBar.setVisibility(View.GONE);
         if (response != null) {
             details = (ProductDetails) response;
-            details.collectChildAsins();
-            adapter.setDetails(details);
-            adapter.notifyDataSetChanged();
+            if (details.getBrandName() != null) {
+                details.collectChildAsins();
+                adapter.setDetails(details);
+                adapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(getActivity(), "No data to display", Toast.LENGTH_SHORT).show();
+
+            }
         } else {
             Toast.makeText(getActivity(), "No network connectivity", Toast.LENGTH_SHORT).show();
         }
