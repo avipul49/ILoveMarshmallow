@@ -108,6 +108,13 @@ public class ProductFragment extends Fragment implements CustomEditText.OnAction
         }
     }
 
+    @Override
+    public void onError(String message) {
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+
+    }
+
     public static interface ClickListener {
         public void onClick(View view, int position);
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.zapoos.main.zappos.model.Response;
 
 import java.io.BufferedInputStream;
@@ -20,6 +21,7 @@ import java.net.URL;
 public class LoadUrlTask extends AsyncTask<String, Void, Response> {
     private ResponseCallback callback;
     private Class<? extends Response> responseClass;
+    private String error;
 
     public ResponseCallback getCallback() {
         return callback;
@@ -48,9 +50,13 @@ public class LoadUrlTask extends AsyncTask<String, Void, Response> {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             String response = readStream(in);
+
             return new Gson().fromJson(response, responseClass);
-        } catch (Exception e) {
+        } catch (JsonSyntaxException e) {
             e.printStackTrace();
+            error = "No results found for the gives search term.";
+        } catch (IOException e) {
+            error = "Network not available.";
         }
 
         return null;
@@ -72,11 +78,16 @@ public class LoadUrlTask extends AsyncTask<String, Void, Response> {
 
     @Override
     protected void onPostExecute(Response response) {
-        callback.onResponse(response);
+        if (response == null)
+            callback.onError(error);
+        else
+            callback.onResponse(response);
     }
 
 
     public interface ResponseCallback {
         void onResponse(Response response);
+
+        void onError(String message);
     }
 }

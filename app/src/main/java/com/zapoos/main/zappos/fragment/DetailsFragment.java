@@ -124,4 +124,10 @@ public class DetailsFragment extends Fragment implements LoadUrlTask.ResponseCal
         }
     }
 
+    @Override
+    public void onError(String message) {
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
 }
